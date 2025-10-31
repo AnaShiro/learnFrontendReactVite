@@ -10,54 +10,11 @@ import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import MuiCard from '@mui/material/Card';
-import { styled } from '@mui/material/styles';
 import ForgotPassword from './components/ForgotPassword';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
-
-const Card = styled(MuiCard)(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignSelf: 'center',
-    width: '100%',
-    padding: theme.spacing(4),
-    gap: theme.spacing(2),
-    margin: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      maxWidth: '450px',
-    },
-    boxShadow:
-      'hsla(280, 40%, 25%, 0.50) 0px 5px 15px 0px, hsla(280, 40%, 25%, 0.50) 0px 15px 35px -5px',
-    ...theme.applyStyles('dark', {
-      boxShadow:
-        'hsla(280, 40%, 25%, 0.50) 0px 5px 15px 0px, hsla(280, 40%, 25%, 0.50) 0px 15px 35px -5px',
-    }),
-}));
-
-const SignInContainer = styled(Stack)(({ theme }) => ({
-    height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-    minHeight: '100%',
-    padding: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(4),
-    },
-    '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      zIndex: -1,
-      inset: 0,
-      backgroundImage:
-        'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsla(270, 100%, 67%, 1.00))',
-      backgroundRepeat: 'no-repeat',
-      ...theme.applyStyles('dark', {
-        backgroundImage:
-          'radial-gradient(at 50% 50%, hsla(267, 100%, 16%, 0.50), hsla(270, 31%, 5%, 1.00))',
-      }),
-    },
-}));
+import { SignInContainer } from '../shared-theme/PageContainer';
+import { Card } from '../shared-theme/SignCard';
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const [emailError, setEmailError] = React.useState(false);
@@ -75,15 +32,19 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      if (emailError || passwordError) {
-        event.preventDefault();
+      event.preventDefault();
+
+      const isValid = validateInputs();
+      if (!isValid) {
         return;
       }
+
       const data = new FormData(event.currentTarget);
-      console.log({
+      const formData = {
         email: data.get('email'),
         password: data.get('password'),
-      });
+      };
+      console.log('Dane z formularza:', formData);
     };
 
     const validateInputs = () => {
@@ -94,7 +55,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
       if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
         setEmailError(true);
-        setEmailErrorMessage('Please enter a valid email address.');
+        setEmailErrorMessage('Proszę podać prawidłowy adres email');
         isValid = false;
       } else {
         setEmailError(false);
@@ -103,7 +64,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
       if (!password.value || password.value.length < 6) {
         setPasswordError(true);
-        setPasswordErrorMessage('Password must be at least 6 characters long.');
+        setPasswordErrorMessage('Hasło musi mieć co najmniej 6 znaków');
         isValid = false;
       } else {
         setPasswordError(false);
@@ -128,6 +89,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             </Typography>
             <Box
               component="form"
+              method="post"
               onSubmit={handleSubmit}
               noValidate
               sx={{
@@ -172,7 +134,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 />
               </FormControl>
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox name="remember" value="true" color="primary" />}
                 label="Zapamiętaj mnie"
               />
               <ForgotPassword open={open} handleClose={handleClose} />
@@ -180,7 +142,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={validateInputs}
               >
                 Zaloguj się
               </Button>
