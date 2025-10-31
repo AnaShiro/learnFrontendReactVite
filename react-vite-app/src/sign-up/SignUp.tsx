@@ -9,8 +9,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
-import { SignContainer } from '../shared-theme/SignCard';
-import { Card } from '../shared-theme/PageContainer';
+import { SignContainer } from '../shared-theme/SignContainer';
+import { Card } from '../shared-theme/PageCard';
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const [emailError, setEmailError] = React.useState(false);
