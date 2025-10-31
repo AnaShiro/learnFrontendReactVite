@@ -6,12 +6,12 @@ function App() {
   return (
     <BrowserRouter>
 
-      <Routes>
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        {/* Przekierowanie z głównej strony na /signin */}
-        <Route path="/" element={<Navigate to="/signin" replace />} />
-      </Routes>
+        <Routes>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            {/* Przekierowanie z głównej strony na /signin */}
+            <Route path="/" element={<Navigate to="/signin" replace />} />
+        </Routes>
     </BrowserRouter>
   );
 }

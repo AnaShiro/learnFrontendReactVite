@@ -6,20 +6,20 @@ export const SignContainer = styled(Stack)(({ theme }) => ({
     minHeight: '100%',
     padding: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(4),
+      	padding: theme.spacing(4),
     },
     '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      zIndex: -1,
-      inset: 0,
-      backgroundImage:
-        'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsla(270, 100%, 67%, 1.00))',
-      backgroundRepeat: 'no-repeat',
-      ...theme.applyStyles('dark', {
-        backgroundImage:
-          'radial-gradient(at 50% 50%, hsla(267, 100%, 16%, 0.50), hsla(270, 31%, 5%, 1.00))',
-      }),
+		content: '""',
+		display: 'block',
+		position: 'absolute',
+		zIndex: -1,
+		inset: 0,
+		backgroundImage:
+			'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsla(270, 100%, 67%, 1.00))',
+		backgroundRepeat: 'no-repeat',
+		...theme.applyStyles('dark', {
+			backgroundImage:
+			'radial-gradient(at 50% 50%, hsla(267, 100%, 16%, 0.50), hsla(270, 31%, 5%, 1.00))',
+		}),
     },
 }));
