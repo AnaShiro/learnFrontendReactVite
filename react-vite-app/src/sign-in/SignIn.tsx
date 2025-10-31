@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography';
 import ForgotPassword from './components/ForgotPassword';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
-import { SignInContainer } from '../shared-theme/PageContainer';
-import { Card } from '../shared-theme/SignCard';
+import { SignContainer } from '../shared-theme/SignCard';
+import { Card } from '../shared-theme/PageContainer';
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const [emailError, setEmailError] = React.useState(false);
@@ -77,8 +77,8 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     return (
       <AppTheme {...props}>
         <CssBaseline enableColorScheme />
-        <SignInContainer direction="column" justifyContent="space-between">
-          <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+        <SignContainer direction="column" justifyContent="space-between">
+			<ColorModeSelect sx={{ position: 'fixed', bottom: '1rem', right: '1rem' }} />
           <Card variant="outlined">
             <Typography
               component="h1"
@@ -169,7 +169,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               </Typography>
             </Box>
           </Card>
-        </SignInContainer>
+        </SignContainer>
       </AppTheme>
     );
 }

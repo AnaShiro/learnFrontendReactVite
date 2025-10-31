@@ -5,6 +5,7 @@ import SignUp from './sign-up/SignUp';
 function App() {
   return (
     <BrowserRouter>
+
       <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
