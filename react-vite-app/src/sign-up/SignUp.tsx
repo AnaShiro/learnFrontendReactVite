@@ -1,16 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import ForgotPassword from './components/ForgotPassword';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { SignInContainer } from '../shared-theme/PageContainer';
@@ -21,15 +17,9 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-    const [open, setOpen] = React.useState(false);
+    const [repeatPasswordError, setRepeatPasswordError] = React.useState(false);
+    const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] = React.useState('');
 
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-
-    const handleClose = () => {
-      setOpen(false);
-    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -50,6 +40,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const validateInputs = () => {
       const email = document.getElementById('email') as HTMLInputElement;
       const password = document.getElementById('password') as HTMLInputElement;
+      const repeatPassword = document.getElementById('repeatPassword') as HTMLInputElement;
 
       let isValid = true;
 
@@ -71,6 +62,15 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
         setPasswordErrorMessage('');
       }
 
+      if(!repeatPassword.value || repeatPassword.value !== password.value) {
+        setRepeatPasswordError(true);
+        setRepeatPasswordErrorMessage('Hasła nie są identyczne');
+        isValid = false;
+      } else {
+        setRepeatPasswordError(false);
+        setRepeatPasswordErrorMessage('');
+      }
+
       return isValid;
     };
 
@@ -85,7 +85,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               variant="h4"
               sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', textAlign: 'center' }}
             >
-              Zaloguj się
+              Zarejestruj się
             </Typography>
             <Box
               component="form"
@@ -108,7 +108,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                   type="email"
                   name="email"
                   placeholder="your@email.com"
-                  autoComplete="email"
                   autoFocus
                   required
                   fullWidth
@@ -125,7 +124,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                   placeholder="••••••"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
                   autoFocus
                   required
                   fullWidth
@@ -133,38 +131,40 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                   color={passwordError ? 'error' : 'primary'}
                 />
               </FormControl>
-              <FormControlLabel
-                control={<Checkbox name="remember" value="true" color="primary" />}
-                label="Zapamiętaj mnie"
-              />
-              <ForgotPassword open={open} handleClose={handleClose} />
+              <FormControl>
+                <FormLabel htmlFor="repeatPassword">Powtórz Hasło</FormLabel>
+                <TextField
+                  error={repeatPasswordError}
+                  helperText={repeatPasswordErrorMessage}
+                  name="repeatPassword"
+                  placeholder="••••••"
+                  type="password"
+                  id="repeatPassword"
+                  autoFocus
+                  required
+                  fullWidth
+                  variant="outlined"
+                  color={repeatPasswordError ? 'error' : 'primary'}
+                />
+              </FormControl>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
+                sx={{ marginTop: '30px' }}
               >
-                Zaloguj się
+                Zarejestruj się
               </Button>
             </Box>
-            <Divider>Nie możesz się zalogować?</Divider>
-			    <Link
-                component="button"
-                type="button"
-                onClick={handleClickOpen}
-                variant="body2"
-                sx={{ alignSelf: 'center' }}
-				>
-					Zapomniałeś hasła?
-				</Link>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
               <Typography sx={{ textAlign: 'center' }}>
-                Nie masz jeszcze konta?{' '}
+                Masz już konto?{' '}
                 <Link
-                  href="/signup"
+                  href="/signin"
                   variant="body2"
                   sx={{ alignSelf: 'center' }}
                 >
-                  Zarejestruj się
+                  Zaloguj się
                 </Link>
               </Typography>
             </Box>
